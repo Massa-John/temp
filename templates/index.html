@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Downloader</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 680px; margin: 40px auto; padding: 0 12px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+    input, select, button { width: 100%; margin-top: 10px; padding: 10px; font-size: 16px; }
+    .msg { padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+    .error { background: #ffe9e9; color: #8a1f1f; }
+    .ok { background: #e8ffef; color: #145c2f; }
+    .hint { color: #666; font-size: 14px; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <h1>YouTube Downloader</h1>
+  <div class="card">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="msg {{ 'error' if category == 'error' else 'ok' }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/download">
+      <label for="url">YouTube URL</label>
+      <input id="url" name="url" type="url" required placeholder="https://www.youtube.com/watch?v=..." />
+
+      <label for="quality">Качество</label>
+      <select id="quality" name="quality" required>
+        <option value="best">best</option>
+        <option value="720p">720p</option>
+        <option value="audio">audio only</option>
+      </select>
+
+      <button type="submit">Скачать</button>
+      <div class="hint">Лимит размера файла: {{ max_size_mb }} MB</div>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "9090:9090"
+    environment:
+      - MAX_SIZE_MB=500
+      - SECRET_KEY=change-me
+      - DOWNLOAD_DIR=/app/downloads
+    volumes:
+      - downloads:/app/downloads
+
+volumes:
+  downloads:
